@@ -1,3 +1,5 @@
+(in-package :asdf-user)
+
 (defsystem "kamera"
   :version "0.1.0"
   :author "pheonix9001"
