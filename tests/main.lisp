@@ -4,8 +4,17 @@
         :rove))
 (in-package :kamera/tests/main)
 
-;; NOTE: To run this test file, execute `(asdf:test-system :kamera)' in your Lisp.
+#+nil
+(asdf:test-system :kamera)
 
-(deftest test-target-1
-  (testing "should (= 1 1) to be true"
-    (ok (= 1 1))))
+(deftest unification
+  (testing "Unify equal lists"
+    (ok (equal
+          (unify '(human "Jeff") '(human "Jeff"))
+          '(human "Jeff"))))
+  (testing "Unify with variables"
+    (let ((x (make-variable 'x))
+          (y (make-variable 'y)))
+      (unify (cons x 10) (cons 20 y))
+      (ok (equal (?- y) 10))
+      (ok (equal (?- x) 20)))))
