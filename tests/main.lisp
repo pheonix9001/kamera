@@ -13,8 +13,8 @@
           (unify '(human "Jeff") '(human "Jeff"))
           '(human "Jeff"))))
   (testing "Unify with variables"
-    (let ((x (make-variable 'x))
-          (y (make-variable 'y)))
+    (fresh (x y)
+      (ok (eql (?- x) x))
       (unify (cons x 10) (cons 20 y))
       (ok (equal (?- y) 10))
       (ok (equal (?- x) 20)))))

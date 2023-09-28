@@ -5,8 +5,9 @@
     unify-failed
     ?-
     unify
-    ==)
-  (:local-nicknames (:util :alexandria)))
+    ==
+    fresh)
+  (:local-nicknames (:a :alexandria)))
 (in-package :kamera)
 
 (defclass logic-var ()
@@ -36,6 +37,13 @@ an expression and get back a value"))
 Throws `unify-failed` if they cant be unified"))
 (setf (fdefinition '==) #'unify)
 
+(defmacro fresh ((&rest vars) &body body)
+  "Creates logic variables `vars` within `body`"
+  `(let* ((*curr-bindings* (make-proto-table :parent *curr-bindings*))
+          ,@(loop for var in vars
+                  collect `(,var (make-variable ',var))))
+     ,@body))
+
 ; A table with a prototype table
 (defstruct proto-table
   "A hash-table with a prototype hash-table"
@@ -49,7 +57,7 @@ Throws `unify-failed` if they cant be unified"))
 (defsetf getproto (key table) (val)
  `(setf (gethash ,key (proto-table-curr ,table)) ,val))
 
-(defvar *curr-bindings* (make-proto-table)
+(defparameter *curr-bindings* (make-proto-table)
   "Mapping of variables to their values")
 #+nil
 (setf *curr-bindings* (make-proto-table))
