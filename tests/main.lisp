@@ -1,8 +1,8 @@
-(defpackage kamera/tests/main
+(defpackage kamera.tests.main
   (:use :cl
         :kamera
         :rove))
-(in-package :kamera/tests/main)
+(in-package :kamera.tests.main)
 
 #+nil
 (asdf:test-system :kamera)
@@ -14,7 +14,7 @@
           '(human "Jeff"))))
   (testing "Unify with variables"
     (fresh (x y)
-      (ok (eql (?- x) x))
+      (ok (eql (?- x) nil))
       (unify (cons x 10) (cons 20 y))
-      (ok (equal (?- y) 10))
-      (ok (equal (?- x) 20)))))
+      (ok (equal (?- y) '(10)))
+      (ok (equal (?- x) '(20))))))

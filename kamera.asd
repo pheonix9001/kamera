@@ -4,7 +4,7 @@
   :version "0.1.0"
   :author "pheonix9001"
   :license ""
-  :depends-on (alexandria)
+  :depends-on (alexandria iterate)
   :components ((:module "src"
                 :components
                 ((:file "main"))))
